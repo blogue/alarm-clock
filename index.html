@@ -12,19 +12,18 @@
       <h1>Alarm Clock!</h1>
       <form id="alarm-clock-form">
         <div class="form-group">
-          <label for="goal">Enter a number:</label>
-          <input id="goal" type="number">
+          <label for="usertime">Enter your time:</label>
+          <input id="user-time" type="time">
           <button class="btn-success" type="submit">Submit</button>
         </div>
       </form>
-      <form id="signup">
-        <div class="form-group">
-          <label for="email">Enter your email:</label>
-          <input id="email" type="text">
-          <button class="btn-success" type="submit">Submit</button>
-        </div>
-      </form>
-      <ul id="solution"></ul>
+      <ul id="alarms">
+
+      </ul>
+      <button id="on-button" type="button" name="button">On</button>
+      <button id="off-button" type="hidden" name="button">Off</button>
+      <button id="snooze" type="button" name="button">Snooze</button>
+      <ul id="beep"></ul>
 
       <h3>Well look at the time! </h3>
       <h3 id="time"></h3>
