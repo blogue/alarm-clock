@@ -28,6 +28,33 @@ Alarm.prototype.checkAlarm = function(currentTime) {
 exports.alarmclockModule = Alarm;
 
 },{}],3:[function(require,module,exports){
+function City(name, temp)
+{
+  this.cityname = name;
+  this.temp = temp;
+}
+
+exports.cityModule = City;
+
+},{}],4:[function(require,module,exports){
+function Temperature()
+{
+  this.citytemp = [];
+}
+
+Temperature.prototype.toFahrenheit = function(kelvin){
+  var fahrenheit = (kelvin * 9/5) - 459.67;
+  return fahrenheit;
+};
+
+Temperature.prototype.toCelcius = function(kelvin){
+  var celcius = kelvin - 273.15;
+  return celcius;
+};
+
+exports.temperatureModule = Temperature;
+
+},{}],5:[function(require,module,exports){
 var Alarm = require("./../js/alarmclock.js").alarmclockModule;
 
 $(document).ready(function(){
@@ -68,18 +95,29 @@ $(document).ready(function(){
 });
 
 var apiKey = require('./../.env').apiKey;
+var Temperature = require("./../js/temperature.js").temperatureModule;
+var City = require("./../js/city.js").cityModule;
 
 $(document).ready(function() {
+  var newTemperature = new Temperature();
+
   $('#weatherLocation').click(function() {
     var city = $('#location').val();
     $('#location').val("");
     $('.showWeather').text("The city you have chosen is " + city + ".");
     $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
-      $('.showWeather').text("The humidity in " + city + " is " + response.main.humidity + "%");
+      $('.showWeather').html("The humidity in " + city + " is " + response.main.humidity + "%" + "<br>");
+      $('#celcius').html("The temperature in celcius in " + city + " is " + newTemperature.toCelcius(response.main.temp) + "<br>");
+      $('#kelvin').html("The temperature in kelvin in " + city + " is " + response.main.temp + "<br>");
+      $('#fahrenheit').html("The temperature in fahrenheit in " + city + " is " + newTemperature.toFahrenheit(response.main.temp) + "<br>");
+      var newCity = new City(city, newTemperature.toFahrenheit(response.main.temp));
+      newTemperature.citytemp.push(newCity);
+      console.log(newCity);
+      console.log(newTemperature.citytemp);
     }).fail(function(error){
-      $('.showWeather').text(error.responseJSON.message);
+      $('.showWeather').html("<p>" + error.responseJSON.message + "</p>");
     });
   });
 });
 
-},{"./../.env":1,"./../js/alarmclock.js":2}]},{},[3]);
+},{"./../.env":1,"./../js/alarmclock.js":2,"./../js/city.js":3,"./../js/temperature.js":4}]},{},[5]);
