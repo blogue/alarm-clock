@@ -1,8 +1,3 @@
-$(document).ready(function(){
-  setInterval(function(){$('#time').text(moment());}, 100)
-
-});
-
 var apiKey = require('./../.env').apiKey;
 
 $(document).ready(function() {

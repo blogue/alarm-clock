@@ -1,3 +1,4 @@
 $(document).ready(function(){
-  $('#time').text(moment());
+  setInterval(function(){$('#time').text(moment());}, 100)
+
 });
